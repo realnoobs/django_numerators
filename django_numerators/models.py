@@ -9,8 +9,7 @@ class NumeratorManager(models.Manager):
         return super().get_queryset()
 
     def get_by_natural_key(self, ctype, date_start, date_end):
-        return self.get(
-            ctype=ctype, date_start=date_start, date_end=date_end)
+        return self.get(ctype=ctype, date_start=date_start, date_end=date_end)
 
 
 class Numerator(models.Model):
