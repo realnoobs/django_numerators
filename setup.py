@@ -28,7 +28,7 @@ setup(
         'django_numerators.utils',
     ],
     install_requires=[
-        'Django>=2.1',
+        'Django>=2.2',
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
