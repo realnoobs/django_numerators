@@ -3,4 +3,3 @@ include LICENSE
 include MANIFEST.in
 include AUTHORS
 graft django_numerators
-graft tests

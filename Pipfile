@@ -5,6 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 tox = "*"
+twine = "*"
+django-polymorphic = "*"
 
 [packages]
 django = "*"
