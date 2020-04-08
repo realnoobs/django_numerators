@@ -200,6 +200,7 @@ class NumeratorMixin(NumeratorMixinBase):
     )
     created_at = models.DateTimeField(
         default=timezone.now,
+        editable=False,
         verbose_name=_("created at"))
 
     inner_id_field = 'inner_id'
