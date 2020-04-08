@@ -1,13 +1,10 @@
 from django.utils import timezone
 from django.test import TestCase
 from tests.models import (
-    Yearly,
-    Montly,
-    CustomFormat,
-    Child1Parent1,
-    Child2Parent1,
-    Child1Parent2,
-    Child2Parent2,
+    Yearly, Montly, CustomFormat,
+    Child1Parent1, Child2Parent1,
+    Child1Parent2, Child2Parent2,
+    Child1Parent3, Child2Parent3
 )
 
 
@@ -70,3 +67,13 @@ class TestNumeratedModel(TestCase):
         child_2 = Child2Parent2(name='Child2', created_at=created_at)
         child_2.save()
         self.assertEqual(child_2.inner_id, 'P219010002')
+
+    def test_numerator_mixin_in_polymorphic_child_model(self):
+        created_at = timezone.datetime(2019, 1, 1, 0, 0, 0)
+        child_1 = Child1Parent3(name='Child1', created_at=created_at)
+        child_1.save()
+        self.assertEqual(child_1.inner_id, 'C119010001')
+
+        child_2 = Child2Parent3(name='Child2', created_at=created_at)
+        child_2.save()
+        self.assertEqual(child_2.inner_id, 'C219010001')

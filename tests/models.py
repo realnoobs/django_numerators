@@ -64,3 +64,16 @@ class Child1Parent2(Parent2):
 
 class Child2Parent2(Parent2):
     pass
+
+
+class Parent3(PolymorphicModel):
+    id = models.UUIDField(**UUID)
+    name = models.CharField(max_length=100)
+
+
+class Child1Parent3(Parent3, NumeratorMixin):
+    doc_prefix = 'C1'
+
+
+class Child2Parent3(Parent3, NumeratorMixin):
+    doc_prefix = 'C2'
