@@ -71,36 +71,25 @@ class Numerator(models.Model):
         self.counter = 0
         return self.counter
 
-    def get_mode(self):
-        return Numerator.YEARLY
-
     @staticmethod
     def get_for_instance(obj):
         opts = obj._meta
-        defaults = {
+        get_matrix = {
+            'app_label': opts.app_label,
+            'model': (opts.model_name if not obj.parent_prefix else obj.parent_model),
+            'prefix': obj.get_doc_prefix(),
+        }
+        create_matrix = {
             'app_label': opts.app_label,
             'model': (opts.model_name if not obj.parent_prefix else obj.parent_model),
             'prefix': obj.get_doc_prefix(),
             'year': obj.get_date_field().year,
-            'month': obj.get_date_field().month if obj.reset_mode == NumeratorReset.MONTHLY else 0
+            'month': obj.get_date_field().month if obj.reset_mode == NumeratorReset.MONTHLY else 0,
+            'reset_mode': obj.reset_mode,
         }
         get_or_create = Numerator.objects.get_or_create
-        ct_counter, created = get_or_create(**defaults, defaults=defaults)
+        ct_counter, created = get_or_create(**get_matrix, defaults=create_matrix)
         return ct_counter
-
-
-class NumeratorMeta(ModelBase):
-    """ Provide extra fields to child Model """
-
-    def __new__(mcs, name, bases, attrs, **kwargs):
-        new_class = super().__new__(mcs, name, bases, attrs, **kwargs)
-        abstract = getattr(new_class._meta, 'abstract', False)
-        created_at_field = models.DateTimeField(
-            default=timezone.now, verbose_name=_("created at"))
-        date_field = getattr(attrs, 'created_at', None)
-        if not date_field and not abstract:
-            new_class.add_to_class('created_at', created_at_field)
-        return new_class
 
 
 class NumeratorMixinBase(models.Model):
